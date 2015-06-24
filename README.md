@@ -1,5 +1,4 @@
 # LFQC - Fastq compressor
-Copyright: Marius Nicolae, 2015
 
 This project contains the source code for the publication:
 
@@ -17,18 +16,32 @@ Change directory to lfqc/
 
 ## To compress:
 
-ruby lfqc.rb file.fastq  -> creates archive file.fastq.lfqc
+```
+ruby lfqc.rb file.fastq  
+```
 
+Creates archive file.fastq.lfqc
+
+```
 ruby lfqc.rb -ls454 file.fastq
-ruby lfqc.rb -solid file.fastq  -> same as above but specifies type of dataset
+ruby lfqc.rb -solid file.fastq
 ruby lfqc.rb -solexa file.fastq
-
+``` 
+Same as above but specifies type of dataset
 
 ## To uncompress:
 
-ruby lfqcd.rb file.fastq.lfqc -> uncompresses to file.fastq (dataset type does not matter)
+```
+ruby lfqcd.rb file.fastq.lfqc
+```
 
-ruby lfqcd.rb file.fastq.lfqc output.fastq -> uncompresses to output.fastq 
+Uncompresses to file.fastq (dataset type does not matter)
+
+```
+ruby lfqcd.rb file.fastq.lfqc output.fastq 
+```
+
+Uncompresses to output.fastq 
 
 
 ## Compiling zpaq and lpaq (if errors occur)
