@@ -4,7 +4,7 @@ This project contains the source code for the publication:
 
 Marius Nicolae, Sudipta Pathak and Sanguthevar Rajasekaran, "LFQC: A lossless compression algorithm for FASTQ files"
 
-http://bioinformatics.oxfordjournals.org/content/early/2015/06/19/bioinformatics.btv384.abstract
+http://bioinformatics.oxfordjournals.org/content/31/20/3276.abstract
 
 
 The latest version can be found at:
