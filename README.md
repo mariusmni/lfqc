@@ -58,7 +58,8 @@ Similarly, try to run the lpaq binary. It should print usage options. If it does
 
 http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html
 
-If the above link is broken, a cached version of the page can be found [here](doc/compile32.html).
+If the above link is broken, a cached version of the page can be found [here](
+http://htmlpreview.github.io/?https://github.com/mariusmni/lfqc/blob/master/doc/compile32.html).
 
 ## Contact
 
