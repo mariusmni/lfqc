@@ -1,0 +1,527 @@
+<!DOCTYPE html><html
+dir="ltr" lang="en-US"><head><meta
+charset="UTF-8" /><meta
+name="viewport" content="width=device-width, initial-scale=1" /><link
+rel="stylesheet" type="text/css" href="//s0.cyberciti.org/assets/res/css/main.min.css" media="screen, projection" /><title>HowTo Compile a 32-bit Application Using gcc On the 64-bit Linux Version</title><link
+rel="canonical" href="http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html" /><link
+rel="alternate" type="application/rss+xml" title="nixCraft feed" href="http://www.cyberciti.biz/tips/feed" /><link
+rel="pingback" href="http://www.cyberciti.biz/tips/xmlrpc.php" /><link
+rel="author" href="https://plus.google.com/+CybercitiBiz?prsrc=5" /><link
+rel="alternate" type="application/rss+xml" title="nixCraft &raquo; HowTo Compile a 32-bit Application Using gcc On the 64-bit Linux Version Comments Feed" href="http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html/feed" /> <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> <script>(adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-7825705102693166",
+    enable_page_level_ads: true
+  });</script> <link
+rel="shortcut icon" href="http://www.cyberciti.biz/tips/wp-content/themes/thesis/lib/images/favicon.ico" /></head><body
+class="template-single"><div
+class="container"> <span
+class="menu_control">≡ Menu</span><ul
+id="menu-menu-1" class="menu"><li
+id="menu-item-113451" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-113451"><a
+href="/">Home</a></li><li
+id="menu-item-113502" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-113502"><a
+href="/faq/">Howtos and Tutorials</a></li><li
+id="menu-item-113500" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-113500"><a
+href="//bash.cyberciti.biz/guide/Main_Page">Linux Shell Scripting TutoriaL</a></li><li
+id="menu-item-113503" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-113503"><a
+href="/tips/about-us">About</a></li><li
+id="menu-item-113501" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-113501"><a
+href="/nixcraft-rss-feed-syndication/">RSS/Feed</a></li></ul><div
+id="header" class="header"><div
+id="site_title"><a
+href="http://www.cyberciti.biz/tips">nixCraft</a></div><div
+id="site_tagline">Linux Tips, Hacks, Tutorials, And Ideas In Blog Format</div></div><div
+class="columns"><div
+class="content"><div
+id="post-1099" class="post_box grt top" itemscope itemtype="http://schema.org/Article"><div
+class="headline_area"><h1 class="headline" itemprop="name">HowTo Compile a 32-bit Application Using gcc On the 64-bit Linux Version</h1><div
+class="byline small"> <span
+class="post_author_intro">by</span> <span
+class="post_author" itemprop="author">Vivek Gite</span><meta
+itemprop="datePublished" content="2006-12-13" /><meta
+itemprop="dateModified" content="2014-04-12" /> <span
+class="post_date_intro">on</span> <span
+class="post_date" title="2006-12-13">December 13, 2006<span
+style='font-style: italic; text-transform: lowercase;'> last updated </span>April 12, 2014</span><div
+class="post_cats" itemprop="keywords"> <span
+class="post_cats_intro">in</span> <a
+href="http://www.cyberciti.biz/tips/category/c-programming" rel="category tag">C Programming</a>, <a
+href="http://www.cyberciti.biz/tips/category/gnuopen-source" rel="category tag">GNU/Open source</a>, <a
+href="http://www.cyberciti.biz/tips/category/howto" rel="category tag">Howto</a></div></div></div><div
+class="post_content" itemprop="articleBody"><p><span
+class="drop_cap">I</span> had to compile a 32-bit application using GNU gcc on the 64-bit version of Linux.<br
+/> <span
+id="more-1099"></span><br
+/> Luckily, gcc man page directed me to the '-m32' and '-m64' options. These options generate code for 32-bit or 64-bit environments, respectively.<p><center><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>  <ins
+class="adsbygoogle"
+style="display:inline-block;width:336px;height:280px"
+data-ad-client="ca-pub-7825705102693166"
+data-ad-slot="2404767461"></ins> <script>(adsbygoogle = window.adsbygoogle || []).push({});</script></p></center></p><ol><li>The 32-bit environment sets int, long and pointer to 32 bits and generates code that runs on any<strong> i386</strong> system.</li><li>The 64-bit environment sets int to 32 bits and long and pointer to 64 bits and generates code for<strong> AMD's x86-64</strong> architecture.</li></ol><h2>You can pass -m64 or -m32 options as follows to Gnu gcc</h2><p>For 32 bit version:<br
+/> <code>$ gcc -m32 -o output32 hello.c</code><br
+/> For 64 bit version :<br
+/> <code>$ gcc -m64 -o output64 hello.c</code><br
+/> Run it as follows:<br
+/> <code>$ ./output32</code><br
+/> Output:</p><pre>Long int size is 4 bytes long!</pre><p>Now let us see 64 bit output:<br
+/> <code>$ ./output64</code></p><pre>Long int size is 8 bytes long!</pre><h3>Sample code - hello.c</h3><pre>#include &lt;stdio.h&gt;
+int main(){
+        long z; printf("Long int size is %i bytes long!\n", sizeof(z)); return 0;
+}</pre><h2>A note about glibc-devel on 64 bit systems</h2><p>You may see an error as follows on 64 bit system when you try to build 32 bit app:</p><blockquote><p>/usr/include/gnu/stubs.h:7:27: error: gnu/stubs-32.h:</p></blockquote><p>This error message shows up on the 64 bit systems where GCC multilib feature is enabled, and it indicates that 32 bit version of libc is not installed. To fix this problem, on a <strong>CentOS/RHEL 5.x</strong> type the following <a
+href="http://www.cyberciti.biz/faq/rhel-centos-fedora-linux-yum-command-howto/" title="See Linux/Unix yum command examples for more info">yum command</a>:<br
+/> <code># yum -y install glibc-devel.i386 libstdc++-devel.i386</code><br
+/> To fix this problem, on a <strong>CentOS/RHEL 6.x</strong> type the following <a
+href="http://www.cyberciti.biz/faq/rhel-centos-fedora-linux-yum-command-howto/" title="See Linux/Unix yum command examples for more info">yum command</a>:<br
+/> <code># yum -y install glibc-devel.i686 glibc-devel ibstdc++-devel.i686</code><br
+/> To fix this problem on a <strong>Debian or Ubuntu Linux</strong> type the following <a
+href="http://www.cyberciti.biz/tips/linux-debian-package-management-cheat-sheet.html" title="See Linux/Unix apt-get command examples for more info">apt-get command</a>:<br
+/> <code>$ sudo apt-get install g++-multilib libc6-dev-i386</code><br
+/> To fix this problem on a <strong>Suse (SLES) / OpenSUSE Linux</strong> type the following zypper command:<br
+/> <code># zypper in glibc-devel-32bit</code></p><h5>See also</h5><ul><li><a
+href="http://www.cyberciti.biz/faq/x86_64-linux-error-gnustub-32h-missing-error-and-solution/">x86_64 Linux Error: gnu/stub-32.h Missing Error and Solution</a></li><li><a
+href="http://www.cyberciti.biz/faq/debian-ubuntu-linux-gnustubs-32-h-no-such-file-or-directory/">GCC: Linux gnu/stubs-32.h: No such file or directory</a></li><li>Man page - <a
+title='See gcc(1) linux man page for more information and examples' href='http://www.manpager.com/linux/man1/gcc.1.html'>gcc(1)</a></ul><p><small><em># Additional correction by Braden B and others; Editing by VG - <a
+href="/view/log/tips/1099.txt">log</a> #</em></small></p><center> <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>  <ins
+class="adsbygoogle"
+style="display:inline-block;width:300px;height:250px"
+data-ad-client="ca-pub-7825705102693166"
+data-ad-slot="2272802261"></ins> <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> </center> <strong>Share this on:</strong><br/><div
+class="nixcraft-social"><a
+class="nixcraft-link nixcraft-twitter" href="https://twitter.com/intent/tweet?text=HowTo+Compile+a+32-bit+Application+Using+gcc+On+the+64-bit+Linux+Version&url=http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html&via=nixcraft" title="Tweet this tutorial/page">Twitter</a><a
+class="nixcraft-link nixcraft-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html" title="Share this page/tutorial on Fa
+cebook">Facebook</a><a
+class="nixcraft-link nixcraft-googleplus" href="https://plus.google.com/share?url=http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html" title="Share this page/tutorial on Google+">Google+<a/a><a
+class="nixcraft-link nixcraft-pdf" href="http://www.cyberciti.biz/view/pdf/tips/1099.php" title="Download this blog post as a free pdf">Download PDF version </a><a
+class="nixcraft-link nixcraft-error" href="https://nixcraft.wufoo.com/forms/give-us-feedback-for-nixcraft/def/Field209=http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html&Field211=HowTo Compile a 32-bit Application Using gcc On the 64-bit Linux Version" target="_blank" title="Click here to report Typo/Grammar and other Incorrect information">Found an error/typo on this page?</a></div><div
+class="crp_related "><div
+class="my_tutorial_series"><strong>More like this:</strong><ul><li><a
+href="http://www.cyberciti.biz/tips/security-update-for-red-hat-linux-kernel.html"     class="crp_title">Security Update for Red Hat Linux Kernel</a></li><li><a
+href="http://www.cyberciti.biz/tips/vmware-on-centos5-rhel5-64-bit-version.html"     class="crp_title">Installing VMWARE server on CentOS 5 or Red hat enterprise Linux 64 bit&hellip;</a></li><li><a
+href="http://www.cyberciti.biz/tips/http-error-500-internal-server-for-php-pages-and-solution.html"     class="crp_title">HTTP Error 500 Internal server for php pages and solution</a></li><li><a
+href="http://www.cyberciti.biz/tips/monitoring-hard-disk-health-with-smartd-under-linux-or-unix-operating-systems.html"     class="crp_title">Monitoring hard disk health with smartd under Linux or UNIX operating&hellip;</a></li><li><a
+href="http://www.cyberciti.biz/tips/rhel-lighttpd-15-installation-configuration-howto.html"     class="crp_title">Redhat Enterprise Linux 5 &#8211; lighttpd 1.5.0 installation</a></li><li><a
+href="http://www.cyberciti.biz/tips/redhat-enterprise-linux-lighttpd-fastcgi-php.html"     class="crp_title">Red Hat enterprise Linux Install lighttpd and Fastcgi PHP</a></li><li><a
+href="http://www.cyberciti.biz/tips/linux-unix-posttfix-mutt-illegal-seek-error.html"     class="crp_title">Postfix Illegal seek  / queue file write mail server error and solution</a></li><li><a
+href="http://www.cyberciti.biz/tips/vmware-redhat-amd-64-bit-error-correct-version-libraries.html"     class="crp_title">The correct version of one or more libraries needed to run VMware Server&hellip;</a></li><li><a
+href="http://www.cyberciti.biz/tips/nixcraft-faq-roundup-17.html"     class="crp_title">nixCraft FAQ Roundup May 06, 2007</a></li><li><a
+href="http://www.cyberciti.biz/tips/howto-bash-shell-change-long-directory-name.html"     class="crp_title">Shell tip: change to a directory having very long name</a></li></ul></div><div
+class="crp_clear"></div></div></div></div><div
+id="comments"><p
+class="comments_intro"><span
+class="bracket">{</span> <span
+class="num_comments">29</span> comments&#8230; <a
+href="#commentform" rel="nofollow">add one</a> <span
+class="bracket">}</span></p><ul
+class="comment_list"><li
+class="comment even thread-even depth-1" id="comment-43894"><div
+class="comment_head"> <span
+class="comment_author">mojo</span> <span
+class="comment_date">December 20, 2006, 12:15 pm</span></div><div
+class="comment_text grt" id="comment-body-43894"><p>I think<br
+/> gcc -m32 -o output64 hello.c</p><p>should be<br
+/> !<br
+/> gcc -m32 -o output32 hello.c</p><p>and</p><p>$ gcc -m64 -o output64 hello.c</p><p>should be</p><p>$ gcc -m64 -o output64 hello.c</p></div><div
+class="comment_footer"> <a
+rel='nofollow' class='comment-reply-link' href='http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html?replytocom=43894#commentform' onclick='return addComment.moveForm( "comment-body-43894", "43894", "commentform", "1099" )' aria-label='Reply to mojo'>Reply</a> <a
+class="comment_permalink" href="#comment-43894" title="permalink to this comment" rel="nofollow">Link</a></div></li><li
+class="comment byuser comment-author-administrator bypostauthor odd alt thread-odd thread-alt depth-1" id="comment-43896"><div
+class="comment_head"> <span
+class="comment_author"><a
+href='http://www.cyberciti.biz/tips/about-us' rel='external nofollow' class='url'>nixCraft</a></span> <span
+class="comment_date">December 20, 2006, 12:18 pm</span></div><div
+class="comment_text grt" id="comment-body-43896"><p>mojo</p><p>Thanks for heads up!</p></div><div
+class="comment_footer"> <a
+rel='nofollow' class='comment-reply-link' href='http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html?replytocom=43896#commentform' onclick='return addComment.moveForm( "comment-body-43896", "43896", "commentform", "1099" )' aria-label='Reply to nixCraft'>Reply</a> <a
+class="comment_permalink" href="#comment-43896" title="permalink to this comment" rel="nofollow">Link</a></div></li><li
+class="comment even thread-even depth-1" id="comment-139816"><div
+class="comment_head"> <span
+class="comment_author">beparas</span> <span
+class="comment_date">June 1, 2007, 12:07 pm</span></div><div
+class="comment_text grt" id="comment-body-139816"><p>its working . thx</p></div><div
+class="comment_footer"> <a
+rel='nofollow' class='comment-reply-link' href='http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html?replytocom=139816#commentform' onclick='return addComment.moveForm( "comment-body-139816", "139816", "commentform", "1099" )' aria-label='Reply to beparas'>Reply</a> <a
+class="comment_permalink" href="#comment-139816" title="permalink to this comment" rel="nofollow">Link</a></div></li><li
+class="comment odd alt thread-odd thread-alt depth-1" id="comment-143821"><div
+class="comment_head"> <span
+class="comment_author">vlad</span> <span
+class="comment_date">May 19, 2008, 5:27 pm</span></div><div
+class="comment_text grt" id="comment-body-143821"><p>I got this error trying to compile with -m32 :S<br
+/> /usr/include/gnu/stubs.h:7:27: error: gnu/stubs-32.h</p><p>Whats wrong?</p></div><div
+class="comment_footer"> <a
+rel='nofollow' class='comment-reply-link' href='http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html?replytocom=143821#commentform' onclick='return addComment.moveForm( "comment-body-143821", "143821", "commentform", "1099" )' aria-label='Reply to vlad'>Reply</a> <a
+class="comment_permalink" href="#comment-143821" title="permalink to this comment" rel="nofollow">Link</a></div></li><li
+class="comment even thread-even depth-1" id="comment-144391"><div
+class="comment_head"> <span
+class="comment_author">Amit</span> <span
+class="comment_date">July 17, 2008, 12:02 pm</span></div><div
+class="comment_text grt" id="comment-body-144391"><p>How can I build x64 target. using -m64 gives error. how can I download the libraries for 64 bit. remember I am using ubuntu and gcc 4.1.2.</p><p>looks like by default gcc compiles x86.</p></div><div
+class="comment_footer"> <a
+rel='nofollow' class='comment-reply-link' href='http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html?replytocom=144391#commentform' onclick='return addComment.moveForm( "comment-body-144391", "144391", "commentform", "1099" )' aria-label='Reply to Amit'>Reply</a> <a
+class="comment_permalink" href="#comment-144391" title="permalink to this comment" rel="nofollow">Link</a></div></li><li
+class="comment odd alt thread-odd thread-alt depth-1" id="comment-144679"><div
+class="comment_head"> <span
+class="comment_author">martin</span> <span
+class="comment_date">August 17, 2008, 11:19 am</span></div><div
+class="comment_text grt" id="comment-body-144679"><p>vlad &#8211; you need to install gcc multilib for your distribution &#8211; it should then compile O.K.</p></div><div
+class="comment_footer"> <a
+rel='nofollow' class='comment-reply-link' href='http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html?replytocom=144679#commentform' onclick='return addComment.moveForm( "comment-body-144679", "144679", "commentform", "1099" )' aria-label='Reply to martin'>Reply</a> <a
+class="comment_permalink" href="#comment-144679" title="permalink to this comment" rel="nofollow">Link</a></div></li><li
+class="comment even thread-even depth-1" id="comment-148587"><div
+class="comment_head"> <span
+class="comment_author">Tim</span> <span
+class="comment_date">May 17, 2009, 5:50 pm</span></div><div
+class="comment_text grt" id="comment-body-148587"><p>Any ideas how to convince the average ./configure to compile in 32 bit mode? I&#8217;m trying to compile pcsx2 (a PS2 emulator) in 32 bit mode because apparently it works better. I did</p><p>export CFLAGS=-m32<br
+/> export CXXFLAGS=-m32</p><p>beforehand, and building stuff works. However the problem is that configure correctly realises I&#8217;m using a 64 bit processor and set lots of #defines and other things (such as choosing the x86-64 version of an assembly file). This messes up the build. God I hate autotools.</p></div><div
+class="comment_footer"> <a
+rel='nofollow' class='comment-reply-link' href='http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html?replytocom=148587#commentform' onclick='return addComment.moveForm( "comment-body-148587", "148587", "commentform", "1099" )' aria-label='Reply to Tim'>Reply</a> <a
+class="comment_permalink" href="#comment-148587" title="permalink to this comment" rel="nofollow">Link</a></div></li><li
+class="comment odd alt thread-odd thread-alt depth-1" id="comment-148970"><div
+class="comment_head"> <span
+class="comment_author"><a
+href='http://sun.com' rel='external nofollow' class='url'>Steven</a></span> <span
+class="comment_date">June 15, 2009, 4:15 pm</span></div><div
+class="comment_text grt" id="comment-body-148970"><p>Try giving build info to autoconf.<br
+/> for a one line solution,<br
+/> $&gt; env CFLAGS=&#8221;-m32&#8243; LDFLAGS=&#8221;-m32&#8243; ./configure &#8211;build=i686-unknown-linux-gnu &#8230;</p></div><div
+class="comment_footer"> <a
+rel='nofollow' class='comment-reply-link' href='http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html?replytocom=148970#commentform' onclick='return addComment.moveForm( "comment-body-148970", "148970", "commentform", "1099" )' aria-label='Reply to Steven'>Reply</a> <a
+class="comment_permalink" href="#comment-148970" title="permalink to this comment" rel="nofollow">Link</a></div></li><li
+class="comment even thread-even depth-1" id="comment-150276"><div
+class="comment_head"> <span
+class="comment_author">Highwind</span> <span
+class="comment_date">August 21, 2009, 1:26 am</span></div><div
+class="comment_text grt" id="comment-body-150276"><p>I get a similar error as Vlad:<br
+/> In file included from /usr/include/features.h:352,<br
+/> from /usr/include/stdio.h:28,<br
+/> from slu_util.h:4,<br
+/> from slu_sdefs.h:28,<br
+/> from sgssv.c:9:<br
+/> /usr/include/gnu/stubs.h:7:27: error: gnu/stubs-32.h: No such file or directory</p><p>Anyone?</p></div><div
+class="comment_footer"> <a
+rel='nofollow' class='comment-reply-link' href='http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html?replytocom=150276#commentform' onclick='return addComment.moveForm( "comment-body-150276", "150276", "commentform", "1099" )' aria-label='Reply to Highwind'>Reply</a> <a
+class="comment_permalink" href="#comment-150276" title="permalink to this comment" rel="nofollow">Link</a></div><ul
+class="children"><li
+class="comment odd alt depth-2" id="comment-181981"><div
+class="comment_head"> <span
+class="comment_author">Franco</span> <span
+class="comment_date">November 3, 2012, 8:50 pm</span></div><div
+class="comment_text grt" id="comment-body-181981"><p>try<br
+/> on   suse SYSTEM:<br
+/> sudo zypper install glibc-devel.i686</p><p>or, on other systems:<br
+/> sudo yum install glibc-devel.i686</p><p>this is going to install the 32 bit version of some libraries</p></div><div
+class="comment_footer"> <a
+rel='nofollow' class='comment-reply-link' href='http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html?replytocom=181981#commentform' onclick='return addComment.moveForm( "comment-body-181981", "181981", "commentform", "1099" )' aria-label='Reply to Franco'>Reply</a> <a
+class="comment_permalink" href="#comment-181981" title="permalink to this comment" rel="nofollow">Link</a></div></li></ul></li><li
+class="comment even thread-odd thread-alt depth-1" id="comment-150278"><div
+class="comment_head"> <span
+class="comment_author">Highwind</span> <span
+class="comment_date">August 21, 2009, 1:32 am</span></div><div
+class="comment_text grt" id="comment-body-150278"><p>I found this:<br
+/> you might want to install glibc-devel.i386 (even if you’re on x64) to fix this problem<br
+/> and this:<br
+/> On ubuntu 64-bit version, solution is:<br
+/> sudo apt-get install g++-multilib</p><p>hope that will solve it.</p></div><div
+class="comment_footer"> <a
+rel='nofollow' class='comment-reply-link' href='http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html?replytocom=150278#commentform' onclick='return addComment.moveForm( "comment-body-150278", "150278", "commentform", "1099" )' aria-label='Reply to Highwind'>Reply</a> <a
+class="comment_permalink" href="#comment-150278" title="permalink to this comment" rel="nofollow">Link</a></div><ul
+class="children"><li
+class="comment odd alt depth-2" id="comment-171116"><div
+class="comment_head"> <span
+class="comment_author">Vamsi</span> <span
+class="comment_date">May 3, 2011, 2:37 pm</span></div><div
+class="comment_text grt" id="comment-body-171116"><p>This works best!!!</p></div><div
+class="comment_footer"> <a
+rel='nofollow' class='comment-reply-link' href='http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html?replytocom=171116#commentform' onclick='return addComment.moveForm( "comment-body-171116", "171116", "commentform", "1099" )' aria-label='Reply to Vamsi'>Reply</a> <a
+class="comment_permalink" href="#comment-171116" title="permalink to this comment" rel="nofollow">Link</a></div></li><li
+class="comment even depth-2" id="comment-181740"><div
+class="comment_head"> <span
+class="comment_author">Ramon</span> <span
+class="comment_date">October 6, 2012, 6:07 pm</span></div><div
+class="comment_text grt" id="comment-body-181740"><p>Thanks..</p></div><div
+class="comment_footer"> <a
+rel='nofollow' class='comment-reply-link' href='http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html?replytocom=181740#commentform' onclick='return addComment.moveForm( "comment-body-181740", "181740", "commentform", "1099" )' aria-label='Reply to Ramon'>Reply</a> <a
+class="comment_permalink" href="#comment-181740" title="permalink to this comment" rel="nofollow">Link</a></div></li><li
+class="comment odd alt depth-2" id="comment-495312"><div
+class="comment_head"> <span
+class="comment_author">Ankit Mondal</span> <span
+class="comment_date">January 14, 2015, 12:01 pm</span></div><div
+class="comment_text grt" id="comment-body-495312"><p>Thanks, this 1-line command worked.</p></div><div
+class="comment_footer"> <a
+rel='nofollow' class='comment-reply-link' href='http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html?replytocom=495312#commentform' onclick='return addComment.moveForm( "comment-body-495312", "495312", "commentform", "1099" )' aria-label='Reply to Ankit Mondal'>Reply</a> <a
+class="comment_permalink" href="#comment-495312" title="permalink to this comment" rel="nofollow">Link</a></div></li></ul></li><li
+class="comment even thread-even depth-1" id="comment-150597"><div
+class="comment_head"> <span
+class="comment_author">Atie</span> <span
+class="comment_date">September 10, 2009, 5:29 pm</span></div><div
+class="comment_text grt" id="comment-body-150597"><p>I faced this error when using &#8221; gcc -m32 -o de &#8216;/home/atieh/Desktop/debug.o&#8221; of course my program is not only in C languge , it &#8216;s embbeded with assembly.<br
+/> here is the error:<br
+/> skipping incompatible /usr/lib/gcc/x86_64-linux-gnu/4.3.3/libgcc.a when searching for -lgcc<br
+/> /usr/bin/ld: skipping incompatible /usr/lib/gcc/x86_64-linux-gnu/4.3.3/libgcc.a when searching for -lgcc<br
+/> /usr/bin/ld: cannot find -lgcc<br
+/> collect2: ld returned 1 exit status</p></div><div
+class="comment_footer"> <a
+rel='nofollow' class='comment-reply-link' href='http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html?replytocom=150597#commentform' onclick='return addComment.moveForm( "comment-body-150597", "150597", "commentform", "1099" )' aria-label='Reply to Atie'>Reply</a> <a
+class="comment_permalink" href="#comment-150597" title="permalink to this comment" rel="nofollow">Link</a></div></li><li
+class="comment odd alt thread-odd thread-alt depth-1" id="comment-150988"><div
+class="comment_head"> <span
+class="comment_author"><a
+href='http://www.sudarsun.in/blog' rel='external nofollow' class='url'>Sudarsun Santhiappan</a></span> <span
+class="comment_date">October 8, 2009, 1:10 pm</span></div><div
+class="comment_text grt" id="comment-body-150988"><p>Make sure you have installed the following packages as well:-<br
+/> 1. libstdc++.i386<br
+/> 2. libgcc.i386<br
+/> 3. glibc.i386<br
+/> 4. glibc-devel.i386</p></div><div
+class="comment_footer"> <a
+rel='nofollow' class='comment-reply-link' href='http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html?replytocom=150988#commentform' onclick='return addComment.moveForm( "comment-body-150988", "150988", "commentform", "1099" )' aria-label='Reply to Sudarsun Santhiappan'>Reply</a> <a
+class="comment_permalink" href="#comment-150988" title="permalink to this comment" rel="nofollow">Link</a></div></li><li
+class="comment even thread-even depth-1" id="comment-154226"><div
+class="comment_head"> <span
+class="comment_author">jonywalker800</span> <span
+class="comment_date">March 12, 2010, 5:23 am</span></div><div
+class="comment_text grt" id="comment-body-154226"><p>Thanks this is what i am looking for</p></div><div
+class="comment_footer"> <a
+rel='nofollow' class='comment-reply-link' href='http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html?replytocom=154226#commentform' onclick='return addComment.moveForm( "comment-body-154226", "154226", "commentform", "1099" )' aria-label='Reply to jonywalker800'>Reply</a> <a
+class="comment_permalink" href="#comment-154226" title="permalink to this comment" rel="nofollow">Link</a></div></li><li
+class="comment odd alt thread-odd thread-alt depth-1" id="comment-154646"><div
+class="comment_head"> <span
+class="comment_author">bknysz</span> <span
+class="comment_date">March 31, 2010, 12:12 pm</span></div><div
+class="comment_text grt" id="comment-body-154646"><p>I&#8217;m trying to compile a 32-bit app on 64-bit debian. One of the libraries I need is libelf. The link is failing. Any ideas? I&#8217;ve installed ia32-libs, and am using the -m32 compiler switch. Thanks for any help you can give me.</p></div><div
+class="comment_footer"> <a
+rel='nofollow' class='comment-reply-link' href='http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html?replytocom=154646#commentform' onclick='return addComment.moveForm( "comment-body-154646", "154646", "commentform", "1099" )' aria-label='Reply to bknysz'>Reply</a> <a
+class="comment_permalink" href="#comment-154646" title="permalink to this comment" rel="nofollow">Link</a></div></li><li
+class="comment even thread-even depth-1" id="comment-155554"><div
+class="comment_head"> <span
+class="comment_author">Anonymous</span> <span
+class="comment_date">May 4, 2010, 3:46 pm</span></div><div
+class="comment_text grt" id="comment-body-155554"><p>you don&#8217;t need a variable. sizeof(long) works fine, too ;)</p></div><div
+class="comment_footer"> <a
+rel='nofollow' class='comment-reply-link' href='http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html?replytocom=155554#commentform' onclick='return addComment.moveForm( "comment-body-155554", "155554", "commentform", "1099" )' aria-label='Reply to '>Reply</a> <a
+class="comment_permalink" href="#comment-155554" title="permalink to this comment" rel="nofollow">Link</a></div></li><li
+class="comment odd alt thread-odd thread-alt depth-1" id="comment-156791"><div
+class="comment_head"> <span
+class="comment_author">Anonymous</span> <span
+class="comment_date">June 23, 2010, 12:06 pm</span></div><div
+class="comment_text grt" id="comment-body-156791"><p>@bknysz: It&#8217;s been a while, but did you find a solution for libelf issue? I am running into the same problem here &#8230;</p></div><div
+class="comment_footer"> <a
+rel='nofollow' class='comment-reply-link' href='http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html?replytocom=156791#commentform' onclick='return addComment.moveForm( "comment-body-156791", "156791", "commentform", "1099" )' aria-label='Reply to '>Reply</a> <a
+class="comment_permalink" href="#comment-156791" title="permalink to this comment" rel="nofollow">Link</a></div><ul
+class="children"><li
+class="comment even depth-2" id="comment-156795"><div
+class="comment_head"> <span
+class="comment_author">bknysz</span> <span
+class="comment_date">June 23, 2010, 3:41 pm</span></div><div
+class="comment_text grt" id="comment-body-156795"><p>If I remember correctly, I just manually copied the 32-bit version into the directory<br
+/> /emul/ia32-linux/usr/lib/libelf*</p></div><div
+class="comment_footer"> <a
+rel='nofollow' class='comment-reply-link' href='http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html?replytocom=156795#commentform' onclick='return addComment.moveForm( "comment-body-156795", "156795", "commentform", "1099" )' aria-label='Reply to bknysz'>Reply</a> <a
+class="comment_permalink" href="#comment-156795" title="permalink to this comment" rel="nofollow">Link</a></div></li></ul></li><li
+class="comment odd alt thread-even depth-1" id="comment-161094"><div
+class="comment_head"> <span
+class="comment_author"><a
+href='http://www.felipe1982.com/blog' rel='external nofollow' class='url'>felipe1982</a></span> <span
+class="comment_date">November 15, 2010, 6:03 am</span></div><div
+class="comment_text grt" id="comment-body-161094"><p>On openSUSE, I fixed the compilation problems by installing<br
+/> gcc-c++-32bit<br
+/> and all dependencies. now the problem is solved. It will automatically select gcc45, or, the latest gcc.</p></div><div
+class="comment_footer"> <a
+rel='nofollow' class='comment-reply-link' href='http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html?replytocom=161094#commentform' onclick='return addComment.moveForm( "comment-body-161094", "161094", "commentform", "1099" )' aria-label='Reply to felipe1982'>Reply</a> <a
+class="comment_permalink" href="#comment-161094" title="permalink to this comment" rel="nofollow">Link</a></div></li><li
+class="comment even thread-odd thread-alt depth-1" id="comment-171454"><div
+class="comment_head"> <span
+class="comment_author">Alex</span> <span
+class="comment_date">May 21, 2011, 5:08 am</span></div><div
+class="comment_text grt" id="comment-body-171454"><p>i have a  oriented file(tmp.o) compiled on 32-bit ,and i want to compile it with &#8220;my.o&#8221; on 64-bit  can i use that command???</p></div><div
+class="comment_footer"> <a
+rel='nofollow' class='comment-reply-link' href='http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html?replytocom=171454#commentform' onclick='return addComment.moveForm( "comment-body-171454", "171454", "commentform", "1099" )' aria-label='Reply to Alex'>Reply</a> <a
+class="comment_permalink" href="#comment-171454" title="permalink to this comment" rel="nofollow">Link</a></div></li><li
+class="comment odd alt thread-even depth-1" id="comment-172157"><div
+class="comment_head"> <span
+class="comment_author"><a
+href='http://weibo.com/baoworkroom' rel='external nofollow' class='url'>Jiabao Wan</a></span> <span
+class="comment_date">June 27, 2011, 3:34 pm</span></div><div
+class="comment_text grt" id="comment-body-172157"><p>Thanks !   Thanks!  Thanks!<br
+/> I searched the entire Baidu(in china), did not find the answer!,This is where the original!</p><p>No one can give me the answer,but the teacher is here:<br
+/> Make sure you have installed the following packages as well:-<br
+/> 1. libstdc++.i386<br
+/> 2. libgcc.i386<br
+/> 3. glibc.i386<br
+/> 4. glibc-devel.i386</p></div><div
+class="comment_footer"> <a
+rel='nofollow' class='comment-reply-link' href='http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html?replytocom=172157#commentform' onclick='return addComment.moveForm( "comment-body-172157", "172157", "commentform", "1099" )' aria-label='Reply to Jiabao Wan'>Reply</a> <a
+class="comment_permalink" href="#comment-172157" title="permalink to this comment" rel="nofollow">Link</a></div></li><li
+class="comment even thread-odd thread-alt depth-1" id="comment-175735"><div
+class="comment_head"> <span
+class="comment_author">Jumbo</span> <span
+class="comment_date">November 18, 2011, 9:38 pm</span></div><div
+class="comment_text grt" id="comment-body-175735"><p>Hi should these be installed on the 32 bit or 64 bit?<br
+/> 1. libstdc++.i386<br
+/> 2. libgcc.i386<br
+/> 3. glibc.i386<br
+/> 4. glibc-devel.i386</p></div><div
+class="comment_footer"> <a
+rel='nofollow' class='comment-reply-link' href='http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html?replytocom=175735#commentform' onclick='return addComment.moveForm( "comment-body-175735", "175735", "commentform", "1099" )' aria-label='Reply to Jumbo'>Reply</a> <a
+class="comment_permalink" href="#comment-175735" title="permalink to this comment" rel="nofollow">Link</a></div></li><li
+class="comment odd alt thread-even depth-1" id="comment-179662"><div
+class="comment_head"> <span
+class="comment_author">Ali B Mahmood</span> <span
+class="comment_date">April 1, 2012, 9:17 am</span></div><div
+class="comment_text grt" id="comment-body-179662"><p>Dear Sir\\<br
+/> My MAC is 64-bit and I would like to install the following libraries<br
+/> 1-gawk 2-gmp 3-mpfr 4- mpc  5- libtool 6- gcc 7- hydra 8- mpich2 9- netcdf 10- paralel-netcdf<br
+/> So, what is instructions for installation ,Is it as the same instructions if by MAC 32-Bit<br
+/> or not<br
+/> Regards<br
+/> ALI B Mahmoos</p></div><div
+class="comment_footer"> <a
+rel='nofollow' class='comment-reply-link' href='http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html?replytocom=179662#commentform' onclick='return addComment.moveForm( "comment-body-179662", "179662", "commentform", "1099" )' aria-label='Reply to Ali B Mahmood'>Reply</a> <a
+class="comment_permalink" href="#comment-179662" title="permalink to this comment" rel="nofollow">Link</a></div></li><li
+class="comment even thread-odd thread-alt depth-1" id="comment-180850"><div
+class="comment_head"> <span
+class="comment_author">vir</span> <span
+class="comment_date">June 27, 2012, 4:16 pm</span></div><div
+class="comment_text grt" id="comment-body-180850"><p>under ubuntu you could check your OS by CLI as uname -a. If it returns i686 it is 32 bit OS or if x86_64 then it is 64 bit OS</p></div><div
+class="comment_footer"> <a
+rel='nofollow' class='comment-reply-link' href='http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html?replytocom=180850#commentform' onclick='return addComment.moveForm( "comment-body-180850", "180850", "commentform", "1099" )' aria-label='Reply to vir'>Reply</a> <a
+class="comment_permalink" href="#comment-180850" title="permalink to this comment" rel="nofollow">Link</a></div></li><li
+class="comment odd alt thread-even depth-1" id="comment-195244"><div
+class="comment_head"> <span
+class="comment_author">me</span> <span
+class="comment_date">November 25, 2013, 4:42 pm</span></div><div
+class="comment_text grt" id="comment-body-195244"><p>thank you for the gcc command &#8230; it is good &#8230; BUT</p><p>no, it is NOT working &#8230; EVER !</p><p>the PROPER documentation SHOULD INCLUDE also the proper libraries for compiling with the different platform, otherwise this is TOTALLY USELESS, it will ALWAYS GIVE YOU MISSING LIBS ERRORS !</p><p>now, you may think that i have a too loud voice, but i actually try to help your tutorial, also i managed to fix it on my system (mint/ubuntu/debian i used: apt-get install libc6-dev-i386 and managed to get x86 exec on a x64 system)</p></div><div
+class="comment_footer"> <a
+rel='nofollow' class='comment-reply-link' href='http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html?replytocom=195244#commentform' onclick='return addComment.moveForm( "comment-body-195244", "195244", "commentform", "1099" )' aria-label='Reply to me'>Reply</a> <a
+class="comment_permalink" href="#comment-195244" title="permalink to this comment" rel="nofollow">Link</a></div></li><li
+class="comment even thread-odd thread-alt depth-1" id="comment-409166"><div
+class="comment_head"> <span
+class="comment_author">gnu assembler</span> <span
+class="comment_date">November 11, 2014, 4:12 am</span></div><div
+class="comment_text grt" id="comment-body-409166"><p>as &#8211;32 -o junk.o junk.s</p></div><div
+class="comment_footer"> <a
+rel='nofollow' class='comment-reply-link' href='http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html?replytocom=409166#commentform' onclick='return addComment.moveForm( "comment-body-409166", "409166", "commentform", "1099" )' aria-label='Reply to gnu assembler'>Reply</a> <a
+class="comment_permalink" href="#comment-409166" title="permalink to this comment" rel="nofollow">Link</a></div></li></ul><form
+id="commentform" method="post" action="http://www.cyberciti.biz/tips/wp-comments-post.php"> <a
+rel="nofollow" id="cancel-comment-reply-link" href="/tips/compile-32bit-application-using-gcc-64-bit-linux.html#respond" style="display:none;">Cancel reply</a><p
+class="comment_form_title">Leave a Comment</p><p
+id="comment_form_name"> <label
+for="author">Name <span
+class="required" title="Required">*</span></label> <input
+type="text" id="author" class="input_text" name="author" value="" tabindex="1" aria-required="true" /></p><p
+id="comment_form_email"> <label
+for="email">Email <span
+class="required" title="Required">*</span></label> <input
+type="text" id="email" class="input_text" name="email" value="" tabindex="2" aria-required="true" /></p><p
+id="comment_form_comment"> <label
+for="comment">Comment</label><textarea name="comment" id="comment" class="input_text" tabindex="4" rows="6"></textarea></p><p
+id="comment_form_submit"> <input
+type="submit" id="submit" class="input_submit" name="submit" tabindex="5" value="Submit" /></p><p
+style="display: none;"><input
+type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="e1df424723" /></p><p
+style="display: none;"><input
+type="hidden" id="ak_js" name="ak_js" value="146"/></p><input
+type='hidden' name='comment_post_ID' value='1099' id='comment_post_ID' /> <input
+type='hidden' name='comment_parent' id='comment_parent' value='0' /></form> <br/><div
+style="font-size: 85%;"></div></div><div
+class="prev_next"><p
+class="next_post">Next post: <a
+href="http://www.cyberciti.biz/tips/apache-mod_perl-tuning-howto-documentation.html" rel="next">Apache mod_perl tuning howto documentation</a></p><p
+class="previous_post">Previous post: <a
+href="http://www.cyberciti.biz/tips/learn-10-good-unix-linux-usage-habits.html" rel="prev">10 bad UNIX or Linux command line usage patterns to avoid</a></p></div></div><div
+class="sidebar"><div
+class="widget widget_text" id="text-23"><p
+class="widget_title">Sysadmin Because Even Developers Need Heroes</p><div
+class="textwidget"><a
+rel="nofollow" target="_blank" href="http://www.amazon.com/gp/product/B015ZXQDWK/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B015ZXQDWK&linkCode=as2&tag=cyberciti-20&linkId=XGWZJOP7Q2DLFDHC"><img
+border="0" src="http://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B015ZXQDWK&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=cyberciti-20" ></a><img
+src="http://ir-na.amazon-adsystem.com/e/ir?t=cyberciti-20&l=as2&o=1&a=B015ZXQDWK" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></div></div><div
+class="widget search-form" id="thesis-search-widget-5"><form
+class="search_form" method="get" action="http://www.cyberciti.biz/tips"><p> <input
+class="input_text" type="text" id="s" name="s" value="To search, type and hit enter" onfocus="if (this.value == 'To search, type and hit enter') {this.value = '';}" onblur="if (this.value == '') {this.value = 'To search, type and hit enter';}" /> <input
+type="hidden" id="searchsubmit" value="Search" /></p></form></div><div
+class="widget widget_text" id="text-24"><div
+class="textwidget"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>  <ins
+class="adsbygoogle"
+style="display:inline-block;width:300px;height:600px"
+data-ad-client="ca-pub-7825705102693166"
+data-ad-slot="3521177162"></ins> <script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div><div
+class="widget widget_text" id="text-25"><p
+class="widget_title">Featured Articles:</p><div
+class="textwidget"><ul><li><a
+href="http://www.cyberciti.biz/open-source/30-cool-best-open-source-softwares-of-2013/">30 Cool Open Source Software I Discovered in 2013</a></li><li><a
+href="http://www.cyberciti.biz/tips/bash-aliases-mac-centos-linux-unix.html">30 Handy Bash Shell Aliases For Linux / Unix / Mac OS X</a></li><li><a
+href="http://www.cyberciti.biz/networking/nmap-command-examples-tutorials/">Top 30 Nmap Command Examples For Sys/Network Admins</a></li><li><a
+href="http://www.cyberciti.biz/tips/php-security-best-practices-tutorial.html">25 PHP Security Best Practices For Sys Admins</a></li><li><a
+href="http://www.cyberciti.biz/tips/top-linux-monitoring-tools.html">20 Linux System Monitoring Tools Every SysAdmin Should Know</a></li><li><a
+href="http://www.cyberciti.biz/tips/linux-security.html">20 Linux Server Hardening Security Tips</a></li><li><a
+href="http://www.cyberciti.biz/tips/linux-iptables-examples.html">Linux: 20 Iptables Examples For New SysAdmins</a></li><li><a
+href="http://www.cyberciti.biz/tips/linux-unix-bsd-openssh-server-best-practices.html">Top 20 OpenSSH Server Best Security Practices </a></li><li><a
+href="http://www.cyberciti.biz/tips/linux-unix-bsd-nginx-webserver-security.html">Top 20 Nginx WebServer Best Security Practices</a><li><A
+href="http://www.cyberciti.biz/tips/check-unix-linux-configuration-file-for-syntax-errors.html">20 Examples: Make Sure Unix / Linux Configuration Files Are Free From Syntax Errors</a><li><a
+href="http://www.cyberciti.biz/open-source/best-terminal-applications-for-linux-unix-macosx/">15 Greatest Open Source Terminal Applications Of 2012</a></li><li><a
+href="http://www.cyberciti.biz/tips/my-10-unix-command-line-mistakes.html">My 10 UNIX Command Line Mistakes</a></li><li><a
+href="http://www.cyberciti.biz/tips/open-source-project-management-software.html">Top 10 Open Source Web-Based Project Management Software</a></li><li><a
+href="http://www.cyberciti.biz/tips/download-email-client-for-linux-mac-osx-windows.html">Top 5 Email Client For Linux, Mac OS X, and Windows Users</a></li><li><a
+href="http://www.cyberciti.biz/tips/linux-laptop.html">The Novice Guide To Buying A Linux Laptop</a></li></ul></div></div><div
+class="widget widget_text" id="text-26"><div
+class="textwidget"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>  <ins
+class="adsbygoogle"
+style="display:inline-block;width:300px;height:1057px"
+data-ad-client="ca-pub-7825705102693166"
+data-ad-slot="6636490668"></ins> <script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div><div
+class="widget widget_text" id="text-27"><p
+class="widget_title">Follow us</p><div
+class="textwidget"><ul><li> <script src="https://apis.google.com/js/platform.js" async defer></script> <div
+class="g-page" data-width="273" data-href="//plus.google.com/u/0/104257421720370350735" data-layout="landscape" data-rel="publisher"></div></li><li><div
+class="fb-page" data-href="https://www.facebook.com/nixcraft" data-width="300" data-small-header="true" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" data-show-posts="false"><div
+class="fb-xfbml-parse-ignore"><blockquote
+cite="https://www.facebook.com/nixcraft"><a
+href="https://www.facebook.com/nixcraft">nixCraft</a></blockquote></div></div></li><li><div
+id="fb-root"></div> <script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script> <a
+href="https://twitter.com/nixcraft" class="twitter-follow-button" data-show-count="true" data-size="large">Follow @nixcraft</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script> </li></ul></div></div><div
+class="widget widget_text" id="text-28"><p
+class="widget_title">Linux Foundation Training</p><div
+class="textwidget"><a
+target="_blank" href="http://shareasale.com/r.cfm?b=768079&amp;u=308572&amp;m=59485&amp;urllink=&amp;afftrack=" rel="nofollow"><img
+src="http://s0.cyberciti.org/images/5892587866cdf0d229b6b3e3305d997b/linux-performance-tuning-banner-300x250.jpg" border="0" /></a></div></div></div></div><div
+class="footer"> &copy;2000-2015 nixCraft. All rights reserved. <a
+href="/tips/privacy">Privacy</a> - <a
+href="/tips/disclaimer">Terms of Service</a> - <a
+href="/tips/contact-us">Questions or Comments</a></div></div><script type='text/javascript' src='http://www.cyberciti.biz/tips/wp-content/plugins/akismet/_inc/form.js?ver=3.1.5'></script>
+<script type='text/javascript' src='http://www.cyberciti.biz/tips/wp-includes/js/comment-reply.min.js?ver=4.3.1'></script>
+<script type="text/javascript">
+(function(){
+	var classes = document.getElementsByClassName('menu_control');
+	for (i = 0; i < classes.length; i++) {
+		classes[i].onclick = function() {
+			var menu = this.nextElementSibling;
+			if (/show_menu/.test(menu.className))
+				menu.className = menu.className.replace('show_menu', '').trim();
+			else
+				menu.className += ' show_menu';
+		};
+	}
+})();
+</script>
+<noscript><style type="text/css" scoped>.menu { display: block; }</style></noscript>
+<script src="http://www.cyberciti.biz/mint/?js" type="text/javascript"></script>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-108650-1']);
+  _gaq.push(['_setDomainName', 'www.cyberciti.biz']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</body>
+</html>
+<!-- Dynamic page generated in 0.154 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2015-12-08 19:07:47 -->
