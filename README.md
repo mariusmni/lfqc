@@ -54,12 +54,20 @@ Lfqc depends on two compression algorithms: zpaq702 and lpaq8. Their binaries ar
 
 Please try to run the zpaq binary with no arguments. It should print usage. If it doesn't print usage, you have to delete the binary and run make in the zpaq folder. This should regenerate zpaq for your machine.
 
-Similarly, try to run the lpaq binary. It should print usage options. If it doesn't, you have to delete the binary and run make. Lpaq is a bit old so it requires some 32 bit libraries. If your machine is 64 bit you may have to first install some 32 bit libraries. The following guide should help:
+Similarly, try to run the lpaq8 binary. It should print usage options. If it doesn't, you have to delete the binary and run make. Lpaq is a bit old so it requires some 32 bit libraries. If your machine is 64 bit you may have to first install some 32 bit libraries. The following guide should help:
 
 http://www.cyberciti.biz/tips/compile-32bit-application-using-gcc-64-bit-linux.html
 
 If the above link is broken, a cached version of the page can be found [here](
 http://htmlpreview.github.io/?https://github.com/mariusmni/lfqc/blob/master/doc/compile32.html).
+
+Note: If you get an error on decompression similar to
+
+```
+lfqcd.rb:29:in `join': no implicit conversion of nil into String (TypeError)
+```
+
+then most likely the lpaq8 or zpaq8 binary do not work on your machine. They should be recompiled, even if they do print usage!
 
 ## Contact
 
